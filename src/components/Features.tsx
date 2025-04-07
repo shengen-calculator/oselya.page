@@ -14,27 +14,27 @@ import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 const items = [
   {
     icon: <ViewQuiltRoundedIcon />,
-    title: 'Dashboard',
+    title: 'Нарахування',
     description:
-      'This item could provide a snapshot of the most important metrics or data points related to the product.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/dash-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/dash-dark.png")`,
+      "Перегляд інформації про нарахування за обраним об'єктом нерухомості.",
+    imageLight: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/accrual.png?alt=media&token=b5daf606-cfdc-4747-ac5e-5c4ac0a035c9")`,
+    imageDark: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/accrual.png?alt=media&token=b5daf606-cfdc-4747-ac5e-5c4ac0a035c9")`,
   },
   {
     icon: <EdgesensorHighRoundedIcon />,
-    title: 'Mobile integration',
+    title: 'Платежі',
     description:
-      'This item could provide information about the mobile app version of the product.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/mobile-dark.png")`,
+      "Перегляд інформації про платежі здійснені власником об'єкту нерухомості.",
+    imageLight: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/payments.png?alt=media&token=0d1002bf-d674-4635-bbc9-f4df5bccba4d")`,
+    imageDark: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/payments.png?alt=media&token=0d1002bf-d674-4635-bbc9-f4df5bccba4d")`,
   },
   {
     icon: <DevicesRoundedIcon />,
-    title: 'Available on all platforms',
+    title: 'Оплата',
     description:
-      'This item could let users know the product is available on all platforms, such as web, mobile, and desktop.',
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || 'https://mui.com'}/static/images/templates/templates-images/devices-dark.png")`,
+      'Перегляд інформації про баланс та можливість переходу на сторінку оплати.',
+    imageLight: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/buttons.png?alt=media&token=c051e239-0be0-4373-a314-7b0c7f4d5d11")`,
+    imageDark: `url("https://firebasestorage.googleapis.com/v0/b/oselya-2024.firebasestorage.app/o/buttons.png?alt=media&token=c051e239-0be0-4373-a314-7b0c7f4d5d11")`,
   },
 ];
 
@@ -151,15 +151,14 @@ export default function Features() {
           gutterBottom
           sx={{ color: 'text.primary' }}
         >
-          Product features
+          Основні переваги
         </Typography>
         <Typography
           variant="body1"
           sx={{ color: 'text.secondary', mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For example,
-          you could list the number of features, their types or benefits, and
-          add-ons.
+          Можливість переглянути стан розрахунку з деталізацією (нарахування та оплати),
+          а також здійснити оплату.
         </Typography>
       </Box>
       <Box
