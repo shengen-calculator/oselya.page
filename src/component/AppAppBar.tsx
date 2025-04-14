@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from "react-router-dom";
 import { styled, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -51,10 +52,13 @@ export default function AppAppBar() {
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0 }}>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button variant="text" color="info" size="small">
+              <Button href="#hero" variant="text" color="info" size="small">
+                Головна
+              </Button>
+              <Button href="#features" variant="text" color="info" size="small">
                 Основні переваги
               </Button>
-              <Button variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
+              <Button href="#faq" variant="text" color="info" size="small" sx={{ minWidth: 0 }}>
                 Поширені запитання
               </Button>
             </Box>
@@ -66,10 +70,10 @@ export default function AppAppBar() {
               alignItems: 'center',
             }}
           >
-            <Button color="primary" variant="text" size="small">
+            <Button component={Link} to="/login" color="primary" variant="text" size="small">
               Увійти
             </Button>
-            <Button color="primary" variant="contained" size="small">
+            <Button component={Link} to="/register" color="primary" variant="contained" size="small">
               Зареєструватись
             </Button>
             <ColorModeIconDropdown />
@@ -100,17 +104,17 @@ export default function AppAppBar() {
                     <CloseRoundedIcon />
                   </IconButton>
                 </Box>
-
-                <MenuItem>Основні переваги</MenuItem>
-                <MenuItem>Поширені запитання</MenuItem>
+                <MenuItem onClick={() => location.href = "#hero"}>Головна</MenuItem>
+                <MenuItem onClick={() => location.href = "#features"}>Основні переваги</MenuItem>
+                <MenuItem onClick={() => location.href = "#faq"}>Поширені запитання</MenuItem>
                 <Divider sx={{ my: 3 }} />
                 <MenuItem>
-                  <Button color="primary" variant="contained" fullWidth>
+                  <Button component={Link} to="/register" color="primary" variant="contained" fullWidth>
                     Зареєструватись
                   </Button>
                 </MenuItem>
                 <MenuItem>
-                  <Button color="primary" variant="outlined" fullWidth>
+                  <Button component={Link} to="/login" color="primary" variant="outlined" fullWidth>
                     Увійти
                   </Button>
                 </MenuItem>
