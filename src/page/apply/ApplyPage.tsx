@@ -15,18 +15,18 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AddressForm from './AddressForm';
 import Info from './Info';
 import InfoMobile from './InfoMobile';
-import PaymentForm from './PaymentForm';
+import SurveyForm from './SurveyForm';
 import Review from './Review';
 import AppTheme from '../../shared-theme/AppTheme';
 import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 function getStepContent(step: number) {
   switch (step) {
     case 0:
       return <AddressForm />;
     case 1:
-      return <PaymentForm />;
+      return <SurveyForm />;
     case 2:
       return <Review />;
     default:
@@ -191,18 +191,16 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
             </Stepper>
             {activeStep === steps.length ? (
               <Stack spacing={2} useFlexGap>
-                <Typography variant="h1">📦</Typography>
-                <Typography variant="h5">Thank you for your order!</Typography>
+                <Typography variant="h5">Дякуємо за Ваше звернення!</Typography>
                 <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                  Your order number is
-                  <strong>&nbsp;#140396</strong>. We have emailed your order
-                  confirmation and will update you once its shipped.
+                  Вашу Заявку зареєстровано та передено на розгляд відповідному
+                    працівнику, який найближчим часом з Вами зв'яжеться.
                 </Typography>
                 <Button
                   variant="contained"
                   sx={{ alignSelf: 'start', width: { xs: '100%', sm: 'auto' } }}
                 >
-                  Go to my orders
+                  До головної
                 </Button>
               </Stack>
             ) : (
@@ -232,7 +230,7 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
                       variant="text"
                       sx={{ display: { xs: 'none', sm: 'flex' } }}
                     >
-                      Previous
+                        Попередня
                     </Button>
                   )}
                   {activeStep !== 0 && (
@@ -243,7 +241,7 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
                       fullWidth
                       sx={{ display: { xs: 'flex', sm: 'none' } }}
                     >
-                      Previous
+                        Попередня
                     </Button>
                   )}
                   <Button
@@ -252,7 +250,7 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
                     onClick={handleNext}
                     sx={{ width: { xs: '100%', sm: 'fit-content' } }}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Подати заявку' : 'Наступна'}
                   </Button>
                 </Box>
               </React.Fragment>
