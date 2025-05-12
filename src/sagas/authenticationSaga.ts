@@ -6,7 +6,7 @@ import {types} from "../redux/actions/types";
 export function* logIn(action: AuthenticationAction) {
     try {
         yield call(AuthenticationApi.logIn, action.params);
-        // const data: TokenResult = yield call(AuthenticationApi.getTokenResult);
+        const data: TokenResult = yield call(AuthenticationApi.getTokenResult);
         yield put({type: types.AUTHENTICATION_SUCCESS, data: null});
     } catch (e: any) {
         yield put({type: types.AUTHENTICATION_FAILURE, text: e.message});

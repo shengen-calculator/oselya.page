@@ -4,7 +4,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
@@ -18,8 +17,6 @@ import Info from './Info';
 import InfoMobile from './InfoMobile';
 import SurveyForm from './SurveyForm';
 import Review from './Review';
-import AppTheme from '../../shared-theme/AppTheme';
-import ColorModeIconDropdown from '../../shared-theme/ColorModeIconDropdown';
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
@@ -45,12 +42,7 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
         setActiveStep(activeStep - 1);
     };
     return (
-        <AppTheme {...props}>
-            <CssBaseline enableColorScheme/>
-            <Box sx={{position: 'fixed', top: '1rem', right: '1rem'}}>
-                <ColorModeIconDropdown/>
-            </Box>
-
+        <React.Fragment>
             <Grid
                 container
                 sx={{
@@ -262,6 +254,6 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
                     </Box>
                 </Grid>
             </Grid>
-        </AppTheme>
+        </React.Fragment>
     );
 }

@@ -13,5 +13,5 @@ type RequisitionState = {
 type ApplicationState = {
     authentication: AuthenticationState,
     requisition: RequisitionState,
-    apiCallsInProgress: number
+    apiCallsInProgress: number,
 }

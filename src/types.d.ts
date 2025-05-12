@@ -7,3 +7,9 @@ interface RegistrationParams {
     email: string
     password: string
 }
+
+interface TokenResult {
+    claims: {
+        company: string
+    }
+}
