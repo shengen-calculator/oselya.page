@@ -15,17 +15,62 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import AddressForm from './AddressForm';
 import Info from './Info';
 import InfoMobile from './InfoMobile';
-import SurveyForm from './SurveyForm';
+import InformationForm from './InformationForm';
 import Review from './Review';
+import {authenticationRequest} from "../../redux/actions/authenticationActions";
+import {connect} from "react-redux";
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
-function getStepContent(step: number) {
+interface ApplicationProps {
+    step: number,
+    emailError: boolean,
+    emailErrorMessage: string,
+    firstNameError: boolean,
+    firstNameErrorMessage: string,
+    lastNameError: boolean,
+    lastNameErrorMessage: string,
+    cityError: boolean,
+    cityErrorMessage: string,
+    addressError: boolean,
+    addressErrorMessage: string,
+    phoneError: boolean,
+    phoneErrorMessage: string
+}
+
+const getStepContent = ({
+                            step,
+                            emailError,
+                            emailErrorMessage,
+                            firstNameError,
+                            firstNameErrorMessage,
+                            lastNameError,
+                            lastNameErrorMessage,
+                            cityError,
+                            cityErrorMessage,
+                            addressError,
+                            addressErrorMessage,
+                            phoneError,
+                            phoneErrorMessage
+                        }: ApplicationProps) => {
     switch (step) {
         case 0:
-            return <AddressForm/>;
+            return <AddressForm
+                emailError={emailError}
+                emailErrorMessage={emailErrorMessage}
+                firstNameError={firstNameError}
+                firstNameErrorMessage={firstNameErrorMessage}
+                lastNameError={lastNameError}
+                lastNameErrorMessage={lastNameErrorMessage}
+                cityError={cityError}
+                cityErrorMessage={cityErrorMessage}
+                addressError={addressError}
+                addressErrorMessage={addressErrorMessage}
+                phoneError={phoneError}
+                phoneErrorMessage={phoneErrorMessage}
+            />;
         case 1:
-            return <SurveyForm/>;
+            return <InformationForm/>;
         case 2:
             return <Review/>;
         default:
@@ -33,14 +78,47 @@ function getStepContent(step: number) {
     }
 }
 
-export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
+const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     const [activeStep, setActiveStep] = React.useState(0);
+
+    const [emailError, setEmailError] = React.useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+    const [firstNameError, setFirstNameError] = React.useState(false);
+    const [firstNameErrorMessage, setFirstNameErrorMessage] = React.useState('');
+    const [lastNameError, setLastNameError] = React.useState(false);
+    const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
+    const [cityError, setCityError] = React.useState(false);
+    const [cityErrorMessage, setCityErrorMessage] = React.useState('');
+    const [addressError, setAddressError] = React.useState(false);
+    const [addressErrorMessage, setAddressErrorMessage] = React.useState('');
+    const [phoneError, setPhoneError] = React.useState(false);
+    const [phoneErrorMessage, setPhoneErrorMessage] = React.useState('');
+
     const handleNext = () => {
-        setActiveStep(activeStep + 1);
+        if (validateAddress()) {
+            setActiveStep(activeStep + 1);
+        }
+
     };
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
+    const validateAddress = () => {
+        const email = document.getElementById('email') as HTMLInputElement;
+        console.log(`email => ${email.value}`);
+
+        setEmailError(true);
+        setEmailErrorMessage('Не коректний формат електронної адреси')
+        return false;
+
+    };
+    const validateInfo = () => {
+
+    };
+    const submitApplication = () => {
+
+    }
+
     return (
         <React.Fragment>
             <Grid
@@ -201,7 +279,21 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
                             </Stack>
                         ) : (
                             <React.Fragment>
-                                {getStepContent(activeStep)}
+                                {getStepContent({
+                                    step: activeStep,
+                                    emailError,
+                                    emailErrorMessage,
+                                    firstNameError,
+                                    firstNameErrorMessage,
+                                    lastNameError,
+                                    lastNameErrorMessage,
+                                    cityError,
+                                    cityErrorMessage,
+                                    addressError,
+                                    addressErrorMessage,
+                                    phoneError,
+                                    phoneErrorMessage
+                                })}
                                 <Box
                                     sx={[
                                         {
@@ -256,4 +348,20 @@ export default function ApplyPage(props: { disableCustomTheme?: boolean }) {
             </Grid>
         </React.Fragment>
     );
-}
+};
+
+const mapStateToProps = (state: ApplicationState) => {
+    return {
+        auth: state.authentication,
+    }
+};
+
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    authenticationRequest
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(ApplyPage);

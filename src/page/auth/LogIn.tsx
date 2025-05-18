@@ -49,7 +49,7 @@ const LogIn = (
         setEmailErrorMessage('');
     }, []);
 
-    const validateInputs = () => {
+    const validateInputs = (): boolean => {
         const email = document.getElementById('email') as HTMLInputElement;
         const password = document.getElementById('password') as HTMLInputElement;
         const name = document.getElementById('name') as HTMLInputElement;
