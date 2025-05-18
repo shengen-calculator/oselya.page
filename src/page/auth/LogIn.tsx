@@ -17,6 +17,7 @@ import {
     AuthenticationAction,
     authenticationRequest
 } from "../../redux/actions/authenticationActions";
+import {useEffect} from "react";
 
 interface LogInPageProps {
     auth: AuthenticationState
@@ -35,6 +36,18 @@ const LogIn = (
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
     const [nameError, setNameError] = React.useState(false);
     const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+
+    useEffect(() => {
+        if (auth.error) {
+            setEmailError(true);
+            setEmailErrorMessage('Вказана адреса не авторизована адміністрацією');
+        }
+    }, [auth.error]);
+
+    useEffect(() => {
+        setEmailError(false);
+        setEmailErrorMessage('');
+    }, []);
 
     const validateInputs = () => {
         const email = document.getElementById('email') as HTMLInputElement;
@@ -74,17 +87,16 @@ const LogIn = (
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         if (nameError || emailError || passwordError) {
-            event.preventDefault();
             return;
         }
         const data = new FormData(event.currentTarget);
-        console.log({
-            name: data.get('name') as String,
-            email: data.get('email'),
-            password: data.get('password'),
-        });
-
+        authenticationRequest({
+            email: data.get('email') as string,
+            company: data.get('name') as string,
+            password: data.get('password') as string
+        })
     };
 
     return (

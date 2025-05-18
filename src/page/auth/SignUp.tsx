@@ -17,6 +17,7 @@ import {
     RegistrationAction,
     registrationRequest
 } from "../../redux/actions/authenticationActions";
+import {useEffect} from "react";
 
 interface SignUpPageProps {
     auth: AuthenticationState
@@ -33,6 +34,18 @@ const SignUp = (
     const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+
+    useEffect(() => {
+        if (auth.error) {
+            setEmailError(true);
+            setEmailErrorMessage('Вказана адреса не авторизована адміністрацією');
+        }
+    }, [auth.error]);
+
+    useEffect(() => {
+        setEmailError(false);
+        setEmailErrorMessage('');
+    }, []);
 
     const validateInputs = () => {
         const email = document.getElementById('email') as HTMLInputElement;

@@ -19,7 +19,7 @@ export const persistConfig = {
 const authPersistConfig = {
     key: 'authentication',
     storage: storage,
-    blacklist: ['logging', 'registering']
+    blacklist: ['logging', 'registering', 'error']
 };
 
 const rootReducer = combineReducers({

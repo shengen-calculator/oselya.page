@@ -1,5 +1,6 @@
 interface AuthenticationParams {
     email: string
+    company: string
     password: string
 }
 
