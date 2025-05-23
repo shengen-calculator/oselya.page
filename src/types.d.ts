@@ -21,7 +21,10 @@ interface Application {
     lastName: string,
     city: string,
     address: string,
-    phone: string
+    phone: string,
+    company: string,
+    quantity: string,
+    messenger: string
 }
 
 interface ApplicationError {
@@ -36,5 +39,11 @@ interface ApplicationError {
     addressError: boolean,
     addressErrorMessage: string,
     phoneError: boolean,
-    phoneErrorMessage: string
+    phoneErrorMessage: string,
+    companyError: boolean,
+    companyErrorMessage: string,
+    quantityError: boolean,
+    quantityErrorMessage: string,
+    messengerError: boolean,
+    messengerErrorMessage: string
 }

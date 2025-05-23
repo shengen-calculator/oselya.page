@@ -2,65 +2,67 @@ import * as React from 'react';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import {styled} from '@mui/material/styles';
-import TextField from "@mui/material/TextField";
+import TextInput from "../../component/TextInput";
 
 const FormGrid = styled(Grid)(() => ({
     display: 'flex',
     flexDirection: 'column',
 }));
 
-interface AddressFormProps {
-    companyError: boolean
-    companyErrorMessage: string,
-    quantityError: boolean,
-    quantityErrorMessage: string,
-    messengerError: boolean,
-    messengerErrorMessage: string,
+interface InformationFormProps {
+    application: Application,
+    applicationError: ApplicationError,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export default function InformationForm() {
+export default function InformationForm({
+                                            application,
+                                            applicationError,
+                                            onChange
+                                        }: InformationFormProps) {
+
     return (
         <Grid container spacing={3}>
             <FormGrid size={{xs: 12, md: 6}}>
-                <FormLabel htmlFor="name" required>
+                <FormLabel htmlFor="company" required>
                     Назва об'єднання
                 </FormLabel>
-                <TextField
-                    id="name"
-                    name="name"
-                    type="name"
+                <TextInput
+                    id="company"
                     placeholder="Добрий Господар"
                     autoComplete="Назва"
-                    required
-                    size="small"
+                    error={applicationError.companyError}
+                    errorMessage={applicationError.companyErrorMessage}
+                    value={application.company}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 12, md: 6}}>
                 <FormLabel htmlFor="quantity" required>
                     Кількість об'єктів (квартир) на утриманні
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="quantity"
-                    name="quantity"
-                    type="quantity"
                     placeholder="120"
                     autoComplete="Кількість"
-                    required
-                    size="small"
+                    error={applicationError.quantityError}
+                    errorMessage={applicationError.quantityErrorMessage}
+                    value={application.quantity}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 12}}>
                 <FormLabel htmlFor="messenger" required>
                     Бажаний месенджер
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="messenger"
-                    name="messenger"
-                    type="messenger"
                     placeholder="Вайбер / Телеграм"
                     autoComplete="Месенджер"
-                    required
-                    size="small"
+                    error={applicationError.messengerError}
+                    errorMessage={applicationError.messengerErrorMessage}
+                    value={application.messenger}
+                    onChange={onChange}
                 />
             </FormGrid>
         </Grid>

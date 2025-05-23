@@ -41,9 +41,14 @@ const getStepContent = ({
                 onChange={onChange}
             />;
         case 1:
-            return <InformationForm/>;
+            return <InformationForm
+                application={application}
+                applicationError={applicationError}
+                onChange={onChange}/>;
         case 2:
-            return <Review/>;
+            return <Review
+                application={application}
+            />;
         default:
             throw new Error('Unknown step');
     }
@@ -58,7 +63,10 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
         lastName: "",
         city: "",
         address: "",
-        phone: ""
+        phone: "",
+        company: "",
+        quantity: "",
+        messenger: ""
     });
 
     const [applicationError, setApplicationError] = React.useState<ApplicationError>({
@@ -73,7 +81,13 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
         addressError: false,
         addressErrorMessage: "",
         phoneError: false,
-        phoneErrorMessage: ""
+        phoneErrorMessage: "",
+        companyError: false,
+        companyErrorMessage: "",
+        quantityError: false,
+        quantityErrorMessage: "",
+        messengerError: false,
+        messengerErrorMessage: ""
     });
 
     const handleNext = () => {
@@ -87,6 +101,7 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
 
         if (activeStep === 2) {
             submitApplication();
+            setActiveStep(activeStep + 1);
         }
     };
 
@@ -117,7 +132,13 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
             addressError: false,
             addressErrorMessage: "",
             phoneError: false,
-            phoneErrorMessage: ""
+            phoneErrorMessage: "",
+            companyError: false,
+            companyErrorMessage: "",
+            quantityError: false,
+            quantityErrorMessage: "",
+            messengerError: false,
+            messengerErrorMessage: ""
         };
 
         if (!application.email || !/\S+@\S+\.\S+/.test(application.email)) {
@@ -160,11 +181,51 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     };
 
     const validateInfo = (): boolean => {
-        return false;
+        let isValid = true;
+        let errors: ApplicationError = {
+            emailError: false,
+            emailErrorMessage: "",
+            firstNameError: false,
+            firstNameErrorMessage: "",
+            lastNameError: false,
+            lastNameErrorMessage: "",
+            cityError: false,
+            cityErrorMessage: "",
+            addressError: false,
+            addressErrorMessage: "",
+            phoneError: false,
+            phoneErrorMessage: "",
+            companyError: false,
+            companyErrorMessage: "",
+            quantityError: false,
+            quantityErrorMessage: "",
+            messengerError: false,
+            messengerErrorMessage: ""
+        };
+
+        if (!application.company || application.company.length < 2) {
+            errors.companyError = true;
+            errors.companyErrorMessage = "Вкажіть назву об'єднання.";
+            isValid = false;
+        }
+
+        if (!application.quantity || !Number(application.quantity)) {
+            errors.quantityError = true;
+            errors.quantityErrorMessage = "Вкажіть кількість об'єктів на утриманні.";
+            isValid = false;
+        }
+
+        if (!application.messenger || application.messenger.length < 2) {
+            errors.messengerError = true;
+            errors.messengerErrorMessage = "Вкажіть назву месенджера.";
+            isValid = false;
+        }
+        setApplicationError(errors);
+        return isValid;
     };
 
-    const submitApplication = () => {
-
+    const submitApplication = (): void => {
+        console.log("Hello world!!!")
     }
 
     return (
