@@ -1,13 +1,22 @@
 import * as React from 'react';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import {styled} from '@mui/material/styles';
+import TextField from "@mui/material/TextField";
 
 const FormGrid = styled(Grid)(() => ({
     display: 'flex',
     flexDirection: 'column',
 }));
+
+interface AddressFormProps {
+    companyError: boolean
+    companyErrorMessage: string,
+    quantityError: boolean,
+    quantityErrorMessage: string,
+    messengerError: boolean,
+    messengerErrorMessage: string,
+}
 
 export default function InformationForm() {
     return (
@@ -16,7 +25,7 @@ export default function InformationForm() {
                 <FormLabel htmlFor="name" required>
                     Назва об'єднання
                 </FormLabel>
-                <OutlinedInput
+                <TextField
                     id="name"
                     name="name"
                     type="name"
@@ -30,7 +39,7 @@ export default function InformationForm() {
                 <FormLabel htmlFor="quantity" required>
                     Кількість об'єктів (квартир) на утриманні
                 </FormLabel>
-                <OutlinedInput
+                <TextField
                     id="quantity"
                     name="quantity"
                     type="quantity"
@@ -44,7 +53,7 @@ export default function InformationForm() {
                 <FormLabel htmlFor="messenger" required>
                     Бажаний месенджер
                 </FormLabel>
-                <OutlinedInput
+                <TextField
                     id="messenger"
                     name="messenger"
                     type="messenger"

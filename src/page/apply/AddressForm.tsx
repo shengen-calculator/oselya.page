@@ -2,7 +2,8 @@ import * as React from 'react';
 import FormLabel from '@mui/material/FormLabel';
 import Grid from '@mui/material/Grid';
 import {styled} from '@mui/material/styles';
-import TextField from "@mui/material/TextField";
+import TextInput from "../../component/TextInput";
+
 
 const FormGrid = styled(Grid)(() => ({
     display: 'flex',
@@ -10,136 +11,100 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 interface AddressFormProps {
-    emailError: boolean
-    emailErrorMessage: string,
-    firstNameError: boolean,
-    firstNameErrorMessage: string,
-    lastNameError: boolean,
-    lastNameErrorMessage: string,
-    cityError: boolean,
-    cityErrorMessage: string,
-    addressError: boolean,
-    addressErrorMessage: string,
-    phoneError: boolean,
-    phoneErrorMessage: string
+    application: Application,
+    applicationError: ApplicationError,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function AddressForm({
-                                        emailError,
-                                        emailErrorMessage,
-                                        firstNameError,
-                                        firstNameErrorMessage,
-                                        lastNameError,
-                                        lastNameErrorMessage,
-                                        cityError,
-                                        cityErrorMessage,
-                                        addressError,
-                                        addressErrorMessage,
-                                        phoneError,
-                                        phoneErrorMessage
+                                        application,
+                                        applicationError,
+                                        onChange
                                     }: AddressFormProps) {
     return (
         <Grid container spacing={3}>
             <FormGrid size={{xs: 12, md: 6}}>
-                <FormLabel htmlFor="first-name" required>
+                <FormLabel htmlFor="firstName" required>
                     Ім'я
                 </FormLabel>
-                <TextField
-                    id="first-name"
-                    name="first-name"
-                    type="name"
+                <TextInput
+                    id="firstName"
                     placeholder="Дарина"
                     autoComplete="Ім'я"
-                    required
-                    size="small"
-                    error={firstNameError}
-                    helperText={firstNameErrorMessage}
-                    color={firstNameError ? 'error' : 'primary'}
+                    error={applicationError.firstNameError}
+                    errorMessage={applicationError.firstNameErrorMessage}
+                    value={application.firstName}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 12, md: 6}}>
-                <FormLabel htmlFor="last-name" required>
+                <FormLabel htmlFor="lastName" required>
                     Прізвище
                 </FormLabel>
-                <TextField
-                    id="last-name"
-                    name="last-name"
-                    type="last-name"
+                <TextInput
+                    id="lastName"
                     placeholder="Степаненко"
                     autoComplete="Прізвище"
-                    required
-                    size="small"
-                    error={lastNameError}
-                    helperText={lastNameErrorMessage}
-                    color={lastNameError ? 'error' : 'primary'}
+                    error={applicationError.lastNameError}
+                    errorMessage={applicationError.lastNameErrorMessage}
+                    value={application.lastName}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 12}}>
                 <FormLabel htmlFor="city" required>
                     Місто
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="city"
-                    name="city"
-                    type="city"
                     placeholder="Київ"
                     autoComplete="city"
-                    required
-                    size="small"
-                    error={cityError}
-                    helperText={cityErrorMessage}
-                    color={cityError ? 'error' : 'primary'}
+                    error={applicationError.cityError}
+                    errorMessage={applicationError.cityErrorMessage}
+                    value={application.city}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 12}}>
                 <FormLabel htmlFor="address" required>
                     Адреса об'єднання
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="address"
-                    name="address"
-                    type="address"
                     placeholder="Вулиця, Номер будинку"
                     autoComplete="shipping address"
-                    required
-                    size="small"
-                    error={addressError}
-                    helperText={addressErrorMessage}
-                    color={addressError ? 'error' : 'primary'}
+                    error={applicationError.addressError}
+                    errorMessage={applicationError.addressErrorMessage}
+                    value={application.address}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 6}}>
                 <FormLabel htmlFor="phone" required>
                     Телефон
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="phone"
-                    name="phone"
-                    type="phone"
                     placeholder="+380501232323"
                     autoComplete="Телефон"
-                    required
-                    size="small"
-                    error={phoneError}
-                    helperText={phoneErrorMessage}
-                    color={phoneError ? 'error' : 'primary'}
+                    error={applicationError.phoneError}
+                    errorMessage={applicationError.phoneErrorMessage}
+                    value={application.phone}
+                    onChange={onChange}
                 />
             </FormGrid>
             <FormGrid size={{xs: 6}}>
                 <FormLabel htmlFor="email" required>
                     Е-мейл
                 </FormLabel>
-                <TextField
+                <TextInput
                     id="email"
-                    name="email"
-                    type="email"
                     placeholder="daryna@gmail.com"
                     autoComplete="email"
-                    required
-                    size="small"
-                    error={emailError}
-                    helperText={emailErrorMessage}
-                    color={emailError ? 'error' : 'primary'}
+                    error={applicationError.emailError}
+                    errorMessage={applicationError.emailErrorMessage}
+                    value={application.email}
+                    onChange={onChange}
                 />
             </FormGrid>
         </Grid>

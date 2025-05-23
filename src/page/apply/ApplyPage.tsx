@@ -17,57 +17,28 @@ import Info from './Info';
 import InfoMobile from './InfoMobile';
 import InformationForm from './InformationForm';
 import Review from './Review';
-import {authenticationRequest} from "../../redux/actions/authenticationActions";
-import {connect} from "react-redux";
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
 interface ApplicationProps {
     step: number,
-    emailError: boolean,
-    emailErrorMessage: string,
-    firstNameError: boolean,
-    firstNameErrorMessage: string,
-    lastNameError: boolean,
-    lastNameErrorMessage: string,
-    cityError: boolean,
-    cityErrorMessage: string,
-    addressError: boolean,
-    addressErrorMessage: string,
-    phoneError: boolean,
-    phoneErrorMessage: string
+    application: Application,
+    applicationError: ApplicationError,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 const getStepContent = ({
                             step,
-                            emailError,
-                            emailErrorMessage,
-                            firstNameError,
-                            firstNameErrorMessage,
-                            lastNameError,
-                            lastNameErrorMessage,
-                            cityError,
-                            cityErrorMessage,
-                            addressError,
-                            addressErrorMessage,
-                            phoneError,
-                            phoneErrorMessage
+                            application,
+                            applicationError,
+                            onChange
                         }: ApplicationProps) => {
     switch (step) {
         case 0:
             return <AddressForm
-                emailError={emailError}
-                emailErrorMessage={emailErrorMessage}
-                firstNameError={firstNameError}
-                firstNameErrorMessage={firstNameErrorMessage}
-                lastNameError={lastNameError}
-                lastNameErrorMessage={lastNameErrorMessage}
-                cityError={cityError}
-                cityErrorMessage={cityErrorMessage}
-                addressError={addressError}
-                addressErrorMessage={addressErrorMessage}
-                phoneError={phoneError}
-                phoneErrorMessage={phoneErrorMessage}
+                application={application}
+                applicationError={applicationError}
+                onChange={onChange}
             />;
         case 1:
             return <InformationForm/>;
@@ -81,40 +52,117 @@ const getStepContent = ({
 const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const [emailError, setEmailError] = React.useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-    const [firstNameError, setFirstNameError] = React.useState(false);
-    const [firstNameErrorMessage, setFirstNameErrorMessage] = React.useState('');
-    const [lastNameError, setLastNameError] = React.useState(false);
-    const [lastNameErrorMessage, setLastNameErrorMessage] = React.useState('');
-    const [cityError, setCityError] = React.useState(false);
-    const [cityErrorMessage, setCityErrorMessage] = React.useState('');
-    const [addressError, setAddressError] = React.useState(false);
-    const [addressErrorMessage, setAddressErrorMessage] = React.useState('');
-    const [phoneError, setPhoneError] = React.useState(false);
-    const [phoneErrorMessage, setPhoneErrorMessage] = React.useState('');
+    const [application, setApplication] = React.useState<Application>({
+        email: "",
+        firstName: "",
+        lastName: "",
+        city: "",
+        address: "",
+        phone: ""
+    });
+
+    const [applicationError, setApplicationError] = React.useState<ApplicationError>({
+        emailError: false,
+        emailErrorMessage: "",
+        firstNameError: false,
+        firstNameErrorMessage: "",
+        lastNameError: false,
+        lastNameErrorMessage: "",
+        cityError: false,
+        cityErrorMessage: "",
+        addressError: false,
+        addressErrorMessage: "",
+        phoneError: false,
+        phoneErrorMessage: ""
+    });
 
     const handleNext = () => {
-        if (validateAddress()) {
+        if (activeStep === 0 && validateAddress()) {
             setActiveStep(activeStep + 1);
         }
 
+        if (activeStep === 1 && validateInfo()) {
+            setActiveStep(activeStep + 1);
+        }
+
+        if (activeStep === 2) {
+            submitApplication();
+        }
     };
+
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
-    const validateAddress = () => {
-        const email = document.getElementById('email') as HTMLInputElement;
-        console.log(`email => ${email.value}`);
 
-        setEmailError(true);
-        setEmailErrorMessage('Не коректний формат електронної адреси')
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = event.target;
+        setApplication(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    const validateAddress = (): boolean => {
+
+        let isValid = true;
+        let errors: ApplicationError = {
+            emailError: false,
+            emailErrorMessage: "",
+            firstNameError: false,
+            firstNameErrorMessage: "",
+            lastNameError: false,
+            lastNameErrorMessage: "",
+            cityError: false,
+            cityErrorMessage: "",
+            addressError: false,
+            addressErrorMessage: "",
+            phoneError: false,
+            phoneErrorMessage: ""
+        };
+
+        if (!application.email || !/\S+@\S+\.\S+/.test(application.email)) {
+            errors.emailError = true;
+            errors.emailErrorMessage = 'Не коректний формат електронної адреси.';
+            isValid = false;
+        }
+
+        if (!application.firstName || application.firstName.length < 2) {
+            errors.firstNameError = true;
+            errors.firstNameErrorMessage = "Вкажіть Ваше Ім'я.";
+            isValid = false;
+        }
+
+        if (!application.lastName || application.lastName.length < 2) {
+            errors.lastNameError = true;
+            errors.lastNameErrorMessage = "Вкажіть Ваше Прізвище.";
+            isValid = false;
+        }
+
+        if (!application.city || application.city.length < 5) {
+            errors.cityError = true;
+            errors.cityErrorMessage = "Вкажіть назву міста (населенго пункту).";
+            isValid = false;
+        }
+
+        if (!application.address || application.address.length < 10) {
+            errors.addressError = true;
+            errors.addressErrorMessage = "Вкажіть адресу.";
+            isValid = false;
+        }
+
+        if (!application.phone || application.phone.length < 10) {
+            errors.phoneError = true;
+            errors.phoneErrorMessage = "Вкажіть номер телефону.";
+            isValid = false;
+        }
+        setApplicationError(errors);
+        return isValid;
+    };
+
+    const validateInfo = (): boolean => {
         return false;
-
     };
-    const validateInfo = () => {
 
-    };
     const submitApplication = () => {
 
     }
@@ -281,18 +329,9 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
                             <React.Fragment>
                                 {getStepContent({
                                     step: activeStep,
-                                    emailError,
-                                    emailErrorMessage,
-                                    firstNameError,
-                                    firstNameErrorMessage,
-                                    lastNameError,
-                                    lastNameErrorMessage,
-                                    cityError,
-                                    cityErrorMessage,
-                                    addressError,
-                                    addressErrorMessage,
-                                    phoneError,
-                                    phoneErrorMessage
+                                    application,
+                                    applicationError,
+                                    onChange: handleChange
                                 })}
                                 <Box
                                     sx={[
@@ -350,18 +389,4 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     );
 };
 
-const mapStateToProps = (state: ApplicationState) => {
-    return {
-        auth: state.authentication,
-    }
-};
-
-// noinspection JSUnusedGlobalSymbols
-const mapDispatchToProps = {
-    authenticationRequest
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(ApplyPage);
+export default ApplyPage;
