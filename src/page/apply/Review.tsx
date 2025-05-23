@@ -5,13 +5,6 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import {ListItem, ListItemText, List} from "@mui/material";
 
-const payments = [
-    {name: 'Card type:', detail: 'Visa'},
-    {name: 'Card holder:', detail: 'Mr. John Smith'},
-    {name: 'Card number:', detail: 'xxxx-xxxx-xxxx-1234'},
-    {name: 'Expiry date:', detail: '04/2024'},
-];
-
 interface PreviewProps {
     application: Application
 }

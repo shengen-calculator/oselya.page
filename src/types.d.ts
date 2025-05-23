@@ -4,6 +4,8 @@ interface AuthenticationParams {
     password: string
 }
 
+interface ApplicationParams extends Application {}
+
 interface RegistrationParams {
     email: string
     password: string

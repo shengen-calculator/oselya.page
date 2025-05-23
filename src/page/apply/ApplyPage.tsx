@@ -17,6 +17,8 @@ import Info from './Info';
 import InfoMobile from './InfoMobile';
 import InformationForm from './InformationForm';
 import Review from './Review';
+import {connect} from "react-redux";
+import {CreateApplicationAction, createApplicationRequest} from "../../redux/actions/applicationAction";
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
@@ -25,13 +27,15 @@ interface ApplicationProps {
     application: Application,
     applicationError: ApplicationError,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    createApplicationRequest: (params: ApplicationParams) => CreateApplicationAction | undefined
 }
 
 const getStepContent = ({
                             step,
                             application,
                             applicationError,
-                            onChange
+                            onChange,
+                            createApplicationRequest
                         }: ApplicationProps) => {
     switch (step) {
         case 0:
@@ -54,7 +58,13 @@ const getStepContent = ({
     }
 }
 
-const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
+interface ApplyPageProps {
+    createApplicationRequest: (params: ApplicationParams) => CreateApplicationAction | undefined
+}
+
+const ApplyPage = ({
+                       createApplicationRequest
+                   }: ApplyPageProps) => {
     const [activeStep, setActiveStep] = React.useState(0);
 
     const [application, setApplication] = React.useState<Application>({
@@ -159,7 +169,7 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
             isValid = false;
         }
 
-        if (!application.city || application.city.length < 5) {
+        if (!application.city || application.city.length < 4) {
             errors.cityError = true;
             errors.cityErrorMessage = "Вкажіть назву міста (населенго пункту).";
             isValid = false;
@@ -225,7 +235,7 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     };
 
     const submitApplication = (): void => {
-        console.log("Hello world!!!")
+        createApplicationRequest(application);
     }
 
     return (
@@ -392,7 +402,8 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
                                     step: activeStep,
                                     application,
                                     applicationError,
-                                    onChange: handleChange
+                                    onChange: handleChange,
+                                    createApplicationRequest
                                 })}
                                 <Box
                                     sx={[
@@ -450,4 +461,14 @@ const ApplyPage = (props: { disableCustomTheme?: boolean }) => {
     );
 };
 
-export default ApplyPage;
+
+// noinspection JSUnusedGlobalSymbols
+const mapDispatchToProps = {
+    createApplicationRequest
+};
+
+export default connect(
+    null,
+    mapDispatchToProps
+)(ApplyPage);
+
