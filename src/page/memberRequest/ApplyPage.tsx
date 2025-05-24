@@ -19,6 +19,7 @@ import InformationForm from './InformationForm';
 import Review from './Review';
 import {connect} from "react-redux";
 import {CreateMemberRequestAction, createMemberRequestRequest} from "../../redux/actions/memberRequestAction";
+import {useEffect} from "react";
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
@@ -27,7 +28,6 @@ interface ApplicationProps {
     memberRequest: MemberRequest,
     memberRequestError: MemberRequestError,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-    createMemberRequestRequest: (params: MemberRequestParams) => CreateMemberRequestAction | undefined
 }
 
 const getStepContent = ({
@@ -35,7 +35,6 @@ const getStepContent = ({
                             memberRequest,
                             memberRequestError,
                             onChange,
-                            createMemberRequestRequest
                         }: ApplicationProps) => {
     switch (step) {
         case 0:
@@ -59,14 +58,15 @@ const getStepContent = ({
 }
 
 interface ApplyPageProps {
+    request: MemberRequestState
     createMemberRequestRequest: (params: MemberRequestParams) => CreateMemberRequestAction | undefined
 }
 
 const ApplyPage = ({
+                       request,
                        createMemberRequestRequest
                    }: ApplyPageProps) => {
     const [activeStep, setActiveStep] = React.useState(0);
-
     const [memberRequest, setMemberRequest] = React.useState<MemberRequest>({
         email: "",
         firstName: "",
@@ -100,6 +100,12 @@ const ApplyPage = ({
         messengerErrorMessage: ""
     });
 
+    useEffect(() => {
+        if (request.saved && activeStep === 2) {
+            setActiveStep(activeStep + 1);
+        }
+    }, [request.saved])
+
     const handleNext = () => {
         if (activeStep === 0 && validateAddress()) {
             setActiveStep(activeStep + 1);
@@ -111,7 +117,6 @@ const ApplyPage = ({
 
         if (activeStep === 2) {
             submitMemberRequest();
-            setActiveStep(activeStep + 1);
         }
     };
 
@@ -402,8 +407,7 @@ const ApplyPage = ({
                                     step: activeStep,
                                     memberRequest: memberRequest,
                                     memberRequestError: memberRequestError,
-                                    onChange: handleChange,
-                                    createMemberRequestRequest: createMemberRequestRequest
+                                    onChange: handleChange
                                 })}
                                 <Box
                                     sx={[
@@ -447,6 +451,7 @@ const ApplyPage = ({
                                         variant="contained"
                                         endIcon={<ChevronRightRoundedIcon/>}
                                         onClick={handleNext}
+                                        disabled={request.saving}
                                         sx={{width: {xs: '100%', sm: 'fit-content'}}}
                                     >
                                         {activeStep === steps.length - 1 ? 'Подати заявку' : 'Наступна'}
@@ -461,6 +466,11 @@ const ApplyPage = ({
     );
 };
 
+const mapStateToProps = (state: ApplicationState) => {
+    return {
+        request: state.memberRequest,
+    }
+};
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
@@ -468,7 +478,7 @@ const mapDispatchToProps = {
 };
 
 export default connect(
-    null,
+    mapStateToProps,
     mapDispatchToProps
 )(ApplyPage);
 
