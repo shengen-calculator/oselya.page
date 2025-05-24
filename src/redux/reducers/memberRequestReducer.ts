@@ -1,6 +1,6 @@
 import initialState from "./initialState";
 
-export default function requisitionReducer(state = initialState.requisition, action: any): RequisitionState {
+export default function memberRequestReducer(state = initialState.memberRequest, action: any): MemberRequestState {
     switch (action.type) {
 
         default:

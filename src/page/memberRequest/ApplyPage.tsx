@@ -18,40 +18,40 @@ import InfoMobile from './InfoMobile';
 import InformationForm from './InformationForm';
 import Review from './Review';
 import {connect} from "react-redux";
-import {CreateApplicationAction, createApplicationRequest} from "../../redux/actions/applicationAction";
+import {CreateMemberRequestAction, createMemberRequestRequest} from "../../redux/actions/memberRequestAction";
 
 const steps = ['Контактні дані', 'Загальна інформація', 'Перегляд'];
 
 interface ApplicationProps {
     step: number,
-    application: Application,
-    applicationError: ApplicationError,
+    memberRequest: MemberRequest,
+    memberRequestError: MemberRequestError,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-    createApplicationRequest: (params: ApplicationParams) => CreateApplicationAction | undefined
+    createMemberRequestRequest: (params: MemberRequestParams) => CreateMemberRequestAction | undefined
 }
 
 const getStepContent = ({
                             step,
-                            application,
-                            applicationError,
+                            memberRequest,
+                            memberRequestError,
                             onChange,
-                            createApplicationRequest
+                            createMemberRequestRequest
                         }: ApplicationProps) => {
     switch (step) {
         case 0:
             return <AddressForm
-                application={application}
-                applicationError={applicationError}
+                memberRequest={memberRequest}
+                memberRequestError={memberRequestError}
                 onChange={onChange}
             />;
         case 1:
             return <InformationForm
-                application={application}
-                applicationError={applicationError}
+                memberRequest={memberRequest}
+                memberRequestError={memberRequestError}
                 onChange={onChange}/>;
         case 2:
             return <Review
-                application={application}
+                memberRequest={memberRequest}
             />;
         default:
             throw new Error('Unknown step');
@@ -59,15 +59,15 @@ const getStepContent = ({
 }
 
 interface ApplyPageProps {
-    createApplicationRequest: (params: ApplicationParams) => CreateApplicationAction | undefined
+    createMemberRequestRequest: (params: MemberRequestParams) => CreateMemberRequestAction | undefined
 }
 
 const ApplyPage = ({
-                       createApplicationRequest
+                       createMemberRequestRequest
                    }: ApplyPageProps) => {
     const [activeStep, setActiveStep] = React.useState(0);
 
-    const [application, setApplication] = React.useState<Application>({
+    const [memberRequest, setMemberRequest] = React.useState<MemberRequest>({
         email: "",
         firstName: "",
         lastName: "",
@@ -79,7 +79,7 @@ const ApplyPage = ({
         messenger: ""
     });
 
-    const [applicationError, setApplicationError] = React.useState<ApplicationError>({
+    const [memberRequestError, setMemberRequestError] = React.useState<MemberRequestError>({
         emailError: false,
         emailErrorMessage: "",
         firstNameError: false,
@@ -110,7 +110,7 @@ const ApplyPage = ({
         }
 
         if (activeStep === 2) {
-            submitApplication();
+            submitMemberRequest();
             setActiveStep(activeStep + 1);
         }
     };
@@ -121,7 +121,7 @@ const ApplyPage = ({
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
-        setApplication(prev => ({
+        setMemberRequest(prev => ({
             ...prev,
             [name]: value
         }));
@@ -130,7 +130,7 @@ const ApplyPage = ({
     const validateAddress = (): boolean => {
 
         let isValid = true;
-        let errors: ApplicationError = {
+        let errors: MemberRequestError = {
             emailError: false,
             emailErrorMessage: "",
             firstNameError: false,
@@ -151,48 +151,48 @@ const ApplyPage = ({
             messengerErrorMessage: ""
         };
 
-        if (!application.email || !/\S+@\S+\.\S+/.test(application.email)) {
+        if (!memberRequest.email || !/\S+@\S+\.\S+/.test(memberRequest.email)) {
             errors.emailError = true;
             errors.emailErrorMessage = 'Не коректний формат електронної адреси.';
             isValid = false;
         }
 
-        if (!application.firstName || application.firstName.length < 2) {
+        if (!memberRequest.firstName || memberRequest.firstName.length < 2) {
             errors.firstNameError = true;
             errors.firstNameErrorMessage = "Вкажіть Ваше Ім'я.";
             isValid = false;
         }
 
-        if (!application.lastName || application.lastName.length < 2) {
+        if (!memberRequest.lastName || memberRequest.lastName.length < 2) {
             errors.lastNameError = true;
             errors.lastNameErrorMessage = "Вкажіть Ваше Прізвище.";
             isValid = false;
         }
 
-        if (!application.city || application.city.length < 4) {
+        if (!memberRequest.city || memberRequest.city.length < 4) {
             errors.cityError = true;
             errors.cityErrorMessage = "Вкажіть назву міста (населенго пункту).";
             isValid = false;
         }
 
-        if (!application.address || application.address.length < 10) {
+        if (!memberRequest.address || memberRequest.address.length < 10) {
             errors.addressError = true;
             errors.addressErrorMessage = "Вкажіть адресу.";
             isValid = false;
         }
 
-        if (!application.phone || application.phone.length < 10) {
+        if (!memberRequest.phone || memberRequest.phone.length < 10) {
             errors.phoneError = true;
             errors.phoneErrorMessage = "Вкажіть номер телефону.";
             isValid = false;
         }
-        setApplicationError(errors);
+        setMemberRequestError(errors);
         return isValid;
     };
 
     const validateInfo = (): boolean => {
         let isValid = true;
-        let errors: ApplicationError = {
+        let errors: MemberRequestError = {
             emailError: false,
             emailErrorMessage: "",
             firstNameError: false,
@@ -213,29 +213,29 @@ const ApplyPage = ({
             messengerErrorMessage: ""
         };
 
-        if (!application.company || application.company.length < 2) {
+        if (!memberRequest.company || memberRequest.company.length < 2) {
             errors.companyError = true;
             errors.companyErrorMessage = "Вкажіть назву об'єднання.";
             isValid = false;
         }
 
-        if (!application.quantity || !Number(application.quantity)) {
+        if (!memberRequest.quantity || !Number(memberRequest.quantity)) {
             errors.quantityError = true;
             errors.quantityErrorMessage = "Вкажіть кількість об'єктів на утриманні.";
             isValid = false;
         }
 
-        if (!application.messenger || application.messenger.length < 2) {
+        if (!memberRequest.messenger || memberRequest.messenger.length < 2) {
             errors.messengerError = true;
             errors.messengerErrorMessage = "Вкажіть назву месенджера.";
             isValid = false;
         }
-        setApplicationError(errors);
+        setMemberRequestError(errors);
         return isValid;
     };
 
-    const submitApplication = (): void => {
-        createApplicationRequest(application);
+    const submitMemberRequest = (): void => {
+        createMemberRequestRequest(memberRequest);
     }
 
     return (
@@ -400,10 +400,10 @@ const ApplyPage = ({
                             <React.Fragment>
                                 {getStepContent({
                                     step: activeStep,
-                                    application,
-                                    applicationError,
+                                    memberRequest: memberRequest,
+                                    memberRequestError: memberRequestError,
                                     onChange: handleChange,
-                                    createApplicationRequest
+                                    createMemberRequestRequest: createMemberRequestRequest
                                 })}
                                 <Box
                                     sx={[
@@ -464,7 +464,7 @@ const ApplyPage = ({
 
 // noinspection JSUnusedGlobalSymbols
 const mapDispatchToProps = {
-    createApplicationRequest
+    createMemberRequestRequest
 };
 
 export default connect(

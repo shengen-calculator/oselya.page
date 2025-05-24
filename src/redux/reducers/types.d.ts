@@ -5,13 +5,14 @@ type AuthenticationState = {
     error: string
 }
 
-type RequisitionState = {
+type MemberRequestState = {
     saving: boolean,
+    saved: boolean,
     error: string
 }
 
 type ApplicationState = {
     authentication: AuthenticationState,
-    requisition: RequisitionState,
+    memberRequest: MemberRequestState,
     apiCallsInProgress: number,
 }

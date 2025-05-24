@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {createBrowserRouter} from "react-router-dom";
 import HomePage from "../page/home/HomePage";
-import ApplyPage from "../page/apply/ApplyPage";
+import ApplyPage from "../page/memberRequest/ApplyPage";
 import LogIn from "../page/auth/LogIn";
 import SignUp from "../page/auth/SignUp";
 
@@ -12,7 +12,7 @@ const AppRouts = createBrowserRouter(
             element: <HomePage/>
         },
         {
-            path: "/apply-to",
+            path: "/member-request",
             element: <ApplyPage/>
         },
         {

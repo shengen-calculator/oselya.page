@@ -4,7 +4,7 @@ interface AuthenticationParams {
     password: string
 }
 
-interface ApplicationParams extends Application {}
+interface MemberRequestParams extends MemberRequest {}
 
 interface RegistrationParams {
     email: string
@@ -17,7 +17,7 @@ interface TokenResult {
     }
 }
 
-interface Application {
+interface MemberRequest {
     email: string,
     firstName: string,
     lastName: string,
@@ -29,7 +29,7 @@ interface Application {
     messenger: string
 }
 
-interface ApplicationError {
+interface MemberRequestError {
     emailError: boolean,
     emailErrorMessage: string,
     firstNameError: boolean,

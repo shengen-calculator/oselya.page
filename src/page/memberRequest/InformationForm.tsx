@@ -10,14 +10,14 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 interface InformationFormProps {
-    application: Application,
-    applicationError: ApplicationError,
+    memberRequest: MemberRequest,
+    memberRequestError: MemberRequestError,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function InformationForm({
-                                            application,
-                                            applicationError,
+                                            memberRequest,
+                                            memberRequestError,
                                             onChange
                                         }: InformationFormProps) {
 
@@ -31,9 +31,9 @@ export default function InformationForm({
                     id="company"
                     placeholder="Добрий Господар"
                     autoComplete="Назва"
-                    error={applicationError.companyError}
-                    errorMessage={applicationError.companyErrorMessage}
-                    value={application.company}
+                    error={memberRequestError.companyError}
+                    errorMessage={memberRequestError.companyErrorMessage}
+                    value={memberRequest.company}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -45,9 +45,9 @@ export default function InformationForm({
                     id="quantity"
                     placeholder="120"
                     autoComplete="Кількість"
-                    error={applicationError.quantityError}
-                    errorMessage={applicationError.quantityErrorMessage}
-                    value={application.quantity}
+                    error={memberRequestError.quantityError}
+                    errorMessage={memberRequestError.quantityErrorMessage}
+                    value={memberRequest.quantity}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -59,9 +59,9 @@ export default function InformationForm({
                     id="messenger"
                     placeholder="Вайбер / Телеграм"
                     autoComplete="Месенджер"
-                    error={applicationError.messengerError}
-                    errorMessage={applicationError.messengerErrorMessage}
-                    value={application.messenger}
+                    error={memberRequestError.messengerError}
+                    errorMessage={memberRequestError.messengerErrorMessage}
+                    value={memberRequest.messenger}
                     onChange={onChange}
                 />
             </FormGrid>

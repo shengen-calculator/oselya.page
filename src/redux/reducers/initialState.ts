@@ -5,8 +5,9 @@ const initialState: ApplicationState = {
         registering: false,
         error: ""
     },
-    requisition: {
+    memberRequest: {
         saving: false,
+        saved: false,
         error: ""
     },
     apiCallsInProgress: 0

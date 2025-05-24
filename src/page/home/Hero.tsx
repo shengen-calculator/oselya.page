@@ -103,7 +103,7 @@ export default function Hero() {
             useFlexGap
             sx={{ pt: 2, width: { xs: '100%', sm: '350px' } }}
           >
-            <Button component={Link} to="/apply-to"
+            <Button component={Link} to="/member-request"
               variant="contained"
               color="primary"
               size="small"

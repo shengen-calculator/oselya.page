@@ -11,14 +11,14 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 interface AddressFormProps {
-    application: Application,
-    applicationError: ApplicationError,
+    memberRequest: MemberRequest,
+    memberRequestError: MemberRequestError,
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function AddressForm({
-                                        application,
-                                        applicationError,
+                                        memberRequest,
+                                        memberRequestError,
                                         onChange
                                     }: AddressFormProps) {
     return (
@@ -31,9 +31,9 @@ export default function AddressForm({
                     id="firstName"
                     placeholder="Дарина"
                     autoComplete="Ім'я"
-                    error={applicationError.firstNameError}
-                    errorMessage={applicationError.firstNameErrorMessage}
-                    value={application.firstName}
+                    error={memberRequestError.firstNameError}
+                    errorMessage={memberRequestError.firstNameErrorMessage}
+                    value={memberRequest.firstName}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -45,9 +45,9 @@ export default function AddressForm({
                     id="lastName"
                     placeholder="Степаненко"
                     autoComplete="Прізвище"
-                    error={applicationError.lastNameError}
-                    errorMessage={applicationError.lastNameErrorMessage}
-                    value={application.lastName}
+                    error={memberRequestError.lastNameError}
+                    errorMessage={memberRequestError.lastNameErrorMessage}
+                    value={memberRequest.lastName}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -59,9 +59,9 @@ export default function AddressForm({
                     id="city"
                     placeholder="Київ"
                     autoComplete="city"
-                    error={applicationError.cityError}
-                    errorMessage={applicationError.cityErrorMessage}
-                    value={application.city}
+                    error={memberRequestError.cityError}
+                    errorMessage={memberRequestError.cityErrorMessage}
+                    value={memberRequest.city}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -73,9 +73,9 @@ export default function AddressForm({
                     id="address"
                     placeholder="Вулиця, Номер будинку"
                     autoComplete="shipping address"
-                    error={applicationError.addressError}
-                    errorMessage={applicationError.addressErrorMessage}
-                    value={application.address}
+                    error={memberRequestError.addressError}
+                    errorMessage={memberRequestError.addressErrorMessage}
+                    value={memberRequest.address}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -87,9 +87,9 @@ export default function AddressForm({
                     id="phone"
                     placeholder="+380501232323"
                     autoComplete="Телефон"
-                    error={applicationError.phoneError}
-                    errorMessage={applicationError.phoneErrorMessage}
-                    value={application.phone}
+                    error={memberRequestError.phoneError}
+                    errorMessage={memberRequestError.phoneErrorMessage}
+                    value={memberRequest.phone}
                     onChange={onChange}
                 />
             </FormGrid>
@@ -101,9 +101,9 @@ export default function AddressForm({
                     id="email"
                     placeholder="daryna@gmail.com"
                     autoComplete="email"
-                    error={applicationError.emailError}
-                    errorMessage={applicationError.emailErrorMessage}
-                    value={application.email}
+                    error={memberRequestError.emailError}
+                    errorMessage={memberRequestError.emailErrorMessage}
+                    value={memberRequest.email}
                     onChange={onChange}
                 />
             </FormGrid>
