@@ -1,8 +1,8 @@
 import {
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword
+    createUserWithEmailAndPassword,
 } from "firebase/auth";
-import {auth} from './database';
+import {auth} from "./database";
 
 class AuthenticationApi {
     static logIn(params: AuthenticationParams) {
@@ -10,14 +10,18 @@ class AuthenticationApi {
     }
 
     static getTokenResult() {
-        if(!auth.currentUser) {
+        if (!auth.currentUser) {
             throw new Error("Current user is not authorized");
         }
         return auth.currentUser.getIdTokenResult();
     }
 
     static register(params: RegistrationParams) {
-        return createUserWithEmailAndPassword(auth, params.email, params.password);
+        return createUserWithEmailAndPassword(
+            auth,
+            params.email,
+            params.password,
+        );
     }
 
     static logOut() {
@@ -26,3 +30,4 @@ class AuthenticationApi {
 }
 
 export default AuthenticationApi;
+

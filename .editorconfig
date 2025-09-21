@@ -1,4 +1,5 @@
 # 4 space indentation
 [*.ts]
 indent_style = space
-indent_size = 4
+indent_size = 2
+typescript_spaces_within_imports = true

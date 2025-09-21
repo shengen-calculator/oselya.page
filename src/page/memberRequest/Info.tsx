@@ -1,26 +1,28 @@
-import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
 
 const products = [
   {
-    name: 'Підключення до системи',
-    desc: 'Вартість послуги',
-    price: '0.00',
-  }
+    name: "Підключення до системи",
+    desc: "Вартість послуги",
+    price: "0.00",
+  },
 ];
 
 interface InfoProps {
   totalPrice: string;
 }
 
-export default function Info({ totalPrice }: InfoProps) {
+const Info: React.FC<InfoProps> = () => {
   return (
     <React.Fragment>
-      <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-      </Typography>
+      <Typography
+        variant="subtitle2"
+        sx={{ color: "text.secondary" }}
+      ></Typography>
       <Typography variant="h4" gutterBottom>
         Створення заявки
       </Typography>
@@ -32,7 +34,7 @@ export default function Info({ totalPrice }: InfoProps) {
               primary={product.name}
               secondary={product.desc}
             />
-            <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+            <Typography variant="body1" sx={{ fontWeight: "medium" }}>
               {product.price}
             </Typography>
           </ListItem>
@@ -40,4 +42,5 @@ export default function Info({ totalPrice }: InfoProps) {
       </List>
     </React.Fragment>
   );
-}
+};
+export default Info;
